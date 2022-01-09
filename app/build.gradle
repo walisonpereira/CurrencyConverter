@@ -16,6 +16,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "EXCHANGE_RATE_API_KEY", "\"${EXCHANGE_RATE_API_KEY}\""
     }
 
     buildFeatures {

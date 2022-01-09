@@ -2,7 +2,7 @@ package com.example.currencyconverter.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.currencyconverter.data.models.Rates
+import com.example.currencyconverter.data.models.ConversionRates
 import com.example.currencyconverter.util.DispatcherProvider
 import com.example.currencyconverter.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
             when(val ratesResponse = repository.getRates(fromCurrency)) {
                 is Resource.Error -> _conversion.value = CurrencyEvent.Failure(ratesResponse.message!!)
                 is Resource.Success -> {
-                    val rates = ratesResponse.data!!.rates
+                    val rates = ratesResponse.data!!.conversionRates
                     val rate = getRateForCurrency(toCurrency, rates)
                     if (rate == null) {
                         _conversion.value = CurrencyEvent.Failure("Unexpected error")
@@ -60,7 +60,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private fun getRateForCurrency(currency: String, rates: Rates) = when (currency) {
+    private fun getRateForCurrency(currency: String, rates: ConversionRates) = when (currency) {
         "CAD" -> rates.cAD
         "HKD" -> rates.hKD
         "ISK" -> rates.iSK
